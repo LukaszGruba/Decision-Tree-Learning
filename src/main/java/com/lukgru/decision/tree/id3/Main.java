@@ -4,7 +4,7 @@ import com.lukgru.decision.tree.id3.algorithm.ID3;
 import com.lukgru.decision.tree.id3.data.Attribute;
 import com.lukgru.decision.tree.id3.data.AttributeClass;
 import com.lukgru.decision.tree.id3.data.Instance;
-import com.lukgru.decision.tree.id3.tree.DTNode;
+import com.lukgru.decision.tree.id3.tree.DecisionTreeNode;
 
 import java.util.Collection;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class Main {
         Main main = new Main();
         Set<Instance> trainingDataSet = main.loadTrainingData();
         Map<Attribute, Collection<AttributeClass>> attributeClasses = main.loadAttributeClasses();
-        DTNode root = new ID3().learn(trainingDataSet, attributeClasses);
+        DecisionTreeNode root = new ID3().learn(trainingDataSet, attributeClasses);
         main.writeTreeToXml(root, "someFile.xml");
     }
 
@@ -29,7 +29,8 @@ public class Main {
         return null;
     }
 
-    private void writeTreeToXml(DTNode root, String fileName) {
+    @SuppressWarnings("PMD") //TODO: remove this after implementation
+    private void writeTreeToXml(DecisionTreeNode root, String fileName) {
         //TODO: move to separate class + implement
     }
 

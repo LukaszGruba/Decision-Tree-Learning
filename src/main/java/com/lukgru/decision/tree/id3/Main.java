@@ -4,6 +4,10 @@ import com.lukgru.decision.tree.id3.algorithm.ID3;
 import com.lukgru.decision.tree.id3.data.Attribute;
 import com.lukgru.decision.tree.id3.data.AttributeClass;
 import com.lukgru.decision.tree.id3.data.Instance;
+import com.lukgru.decision.tree.id3.io.CsvTrainingDataLoader;
+import com.lukgru.decision.tree.id3.io.TrainingDataLoader;
+import com.lukgru.decision.tree.id3.io.TreeWriter;
+import com.lukgru.decision.tree.id3.io.XmlTreeWriter;
 import com.lukgru.decision.tree.id3.tree.DecisionTreeNode;
 
 import java.util.Collection;
@@ -16,27 +20,15 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
-        Main main = new Main();
-        Set<Instance> trainingDataSet = main.loadTrainingData();
-        Map<Attribute, Collection<AttributeClass>> attributeClasses = main.loadAttributeClasses();
+        TrainingDataLoader loader = new CsvTrainingDataLoader("training.csv");
+        loader.load();
+        Set<Instance> trainingDataSet = loader.getTrainingData();
+        Map<Attribute, Collection<AttributeClass>> attributeClasses = loader.getAttributeClasses();
+
         DecisionTreeNode root = new ID3().learn(trainingDataSet, attributeClasses);
-        main.writeTreeToXml(root, "someFile.xml");
-    }
 
-    private Map<Attribute, Collection<AttributeClass>> loadAttributeClasses() {
-        //TODO: implement
-        //TODO: move to separate class
-        return null;
-    }
-
-    @SuppressWarnings("PMD") //TODO: remove this after implementation
-    private void writeTreeToXml(DecisionTreeNode root, String fileName) {
-        //TODO: move to separate class + implement
-    }
-
-    private Set<Instance> loadTrainingData() {
-        //TODO: move to separate class + implement
-        return null;
+        TreeWriter writer = new XmlTreeWriter();
+        writer.write(root, "tree.xml");
     }
 
 }

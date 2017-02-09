@@ -20,12 +20,15 @@ import static java.util.stream.Collectors.toList;
 public class ID3 {
 
     private EntropyEvaluator entropyEvaluator = new EntropyEvaluator();
+    private ClassificationRunner classificationRunner = new ClassificationRunner();
 
     public DecisionTreeNode learn(Collection<Instance> trainingDataSet, Map<Attribute, Collection<AttributeClass>> attributesClasses) {
         Optional<Attribute> lowestEntropyAttribute = getLowestEntropyAttribute(trainingDataSet, attributesClasses);
         if (lowestEntropyAttribute.isPresent()) {
-            Map<AttributeClass, Collection<Instance>> dataSubsets = split(trainingDataSet,
-                    lowestEntropyAttribute.get(), attributesClasses.get(lowestEntropyAttribute));
+            Map<AttributeClass, Collection<Instance>> dataSubsets = classificationRunner.split(
+                    trainingDataSet,
+                    lowestEntropyAttribute.get(),
+                    attributesClasses.get(lowestEntropyAttribute));
             attributesClasses.remove(lowestEntropyAttribute);
             Collection<DecisionTreeNode> children = getChildrenNodes(dataSubsets, attributesClasses);
             return new DecisionTreeNode(lowestEntropyAttribute.get(), children);
@@ -43,19 +46,6 @@ public class ID3 {
                     return node;
                 })
                 .collect(toList());
-    }
-
-    //TODO: move to separate class
-    private Map<AttributeClass, Collection<Instance>> split(Collection<Instance> trainingDataSet,
-                                                            Attribute attribute, Collection<AttributeClass> attributeClasses) {
-        Map<AttributeClass, Collection<Instance>> subsets = new HashMap<>();
-        attributeClasses.forEach(attributeClass -> {
-            List<Instance> subset = trainingDataSet.stream()
-                    .filter(instance -> attributeClass.meetsCriteria(instance.getAttributeValue(attribute)))
-                    .collect(toList());
-            subsets.put(attributeClass, subset);
-        });
-        return subsets;
     }
 
     private Optional<Attribute> getLowestEntropyAttribute(Collection<Instance> trainingDataSet,

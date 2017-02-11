@@ -59,8 +59,10 @@ public class ID3 {
 
     private Double calculateEntropy(Collection<Instance> trainingDataSet,
                                     Map<Attribute, Collection<AttributeClass>> attributes, Attribute attribute) {
-        List<Value> a1Values = trainingDataSet.stream().map(instance -> instance.getAttributeValue(attribute)).collect(toList());
-        return entropyEvaluator.evaluateEntropy(a1Values, attributes.get(attribute));
+        List<Value> values = trainingDataSet.stream()
+                .map(instance -> instance.getAttributeValue(attribute))
+                .collect(toList());
+        return entropyEvaluator.evaluateEntropy(values, attributes.get(attribute));
     }
 
 }

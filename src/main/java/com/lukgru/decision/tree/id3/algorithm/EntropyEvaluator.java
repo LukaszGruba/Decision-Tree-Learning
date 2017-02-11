@@ -17,7 +17,7 @@ public class EntropyEvaluator {
                     .filter(attributeClass::meetsCriteria)
                     .count();
             double probability = count / size;
-            return  -probability * Math.log(probability);
+            return probability != 0.0 ? -probability * Math.log(probability) / Math.log(2) : 0.0;
         }).sum();
     }
 }

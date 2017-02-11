@@ -11,6 +11,12 @@ public class AttributeClass {
     private Attribute attribute;
     private Predicate<Value> condition;
 
+    public AttributeClass(String className, Attribute attribute) {
+        this.className = className;
+        this.attribute = attribute;
+        condition = className::equals;
+    }
+
     public AttributeClass(String className, Attribute attribute, Predicate<Value> condition) {
         this.className = className;
         this.attribute = attribute;

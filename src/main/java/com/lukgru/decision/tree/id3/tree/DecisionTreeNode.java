@@ -1,36 +1,40 @@
 package com.lukgru.decision.tree.id3.tree;
 
 import com.lukgru.decision.tree.id3.data.Attribute;
-import com.lukgru.decision.tree.id3.data.AttributeClass;
+import com.lukgru.decision.tree.id3.data.Decision;
+import com.lukgru.decision.tree.id3.data.Value;
 
-import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Łukasz on 2017-02-07.
  */
 public class DecisionTreeNode {
-    private final Attribute attribute;
-    private final Collection<DecisionTreeNode> children;
-    private AttributeClass attributeClass;
 
-    public DecisionTreeNode(Attribute attribute, Collection<DecisionTreeNode> children) {
+    private Attribute attribute;
+    private Map<Value, DecisionTreeNode> decisions;
+    private Decision decision;
+
+    public DecisionTreeNode(Decision decision) {
+        this.decision = decision;
+    }
+
+    public DecisionTreeNode(Attribute attribute, Map<Value, DecisionTreeNode> decisions) {
         this.attribute = attribute;
-        this.children = children;
+        this.decisions = decisions;
     }
 
     public Attribute getAttribute() {
         return attribute;
     }
 
-    public Collection<DecisionTreeNode> getChildren() {
-        return children;
+    public Map<Value, DecisionTreeNode> getDecisions() {
+        return Collections.unmodifiableMap(new HashMap<>(decisions));
     }
 
-    public AttributeClass getAttributeClass() {
-        return attributeClass;
-    }
-
-    public void setAttributeClass(AttributeClass attributeClass) {
-        this.attributeClass = attributeClass;
+    public Decision getDecision() {
+        return decision;
     }
 }

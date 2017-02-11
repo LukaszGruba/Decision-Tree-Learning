@@ -9,8 +9,18 @@ import java.util.Map;
 public class Instance {
 
     private Map<Attribute, Value> attributeValues = new HashMap<>();
+    private Decision decision;
+
+    public Instance(Map<Attribute, Value> attributeValues, Decision decision) {
+        this.attributeValues = attributeValues;
+        this.decision = decision;
+    }
 
     public Value getAttributeValue(Attribute attribute) {
         return attributeValues.get(attribute);
+    }
+
+    public Decision getDecision() {
+        return decision;
     }
 }

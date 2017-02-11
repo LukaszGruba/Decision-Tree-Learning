@@ -31,9 +31,12 @@ public class ID3 {
         }
     }
 
-    private Map<Value, DecisionTreeNode> createDecisions(Map<Value, Collection<Instance>> dataSubsets) {
-        //TODO: implement
-        return null;
+    boolean isDataHomogeneous(Collection<Instance> trainingDataSet) {
+        long numberOfValueTypes = trainingDataSet.stream()
+                .map(instance -> instance.getDecision().getValue())
+                .distinct()
+                .count();
+        return numberOfValueTypes == 1;
     }
 
     private Attribute getLowestEntropyAttribute(Collection<Instance> trainingDataSet) {
@@ -41,9 +44,9 @@ public class ID3 {
         return null;
     }
 
-    private boolean isDataHomogeneous(Collection<Instance> trainingDataSet) {
+    private Map<Value, DecisionTreeNode> createDecisions(Map<Value, Collection<Instance>> dataSubsets) {
         //TODO: implement
-        return false;
+        return null;
     }
 
 }

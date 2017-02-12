@@ -18,16 +18,15 @@ public class ID3 {
     private ClassificationRunner classificationRunner = new ClassificationRunner();
 
     public DecisionTreeNode learn(Collection<Instance> trainingDataSet) {
-        boolean isHomogeneous = isDataHomogeneous(trainingDataSet);
-        if (isHomogeneous) {
+        if (isDataHomogeneous(trainingDataSet)) {
             Decision homogeneousDecision = trainingDataSet.stream().findFirst().get().getDecision();
             return new DecisionTreeNode(homogeneousDecision);
         }
         else {
-            Attribute lowestEntropyAttribute = getHighestInformationGainAttribute(trainingDataSet);
-            Map<Value, Collection<Instance>> dataSubsets = classificationRunner.split(trainingDataSet, lowestEntropyAttribute);
+            Attribute highestInformationGainAttribute = getHighestInformationGainAttribute(trainingDataSet);
+            Map<Value, Collection<Instance>> dataSubsets = classificationRunner.split(trainingDataSet, highestInformationGainAttribute);
             Map<Value, DecisionTreeNode> decisions = createDecisions(dataSubsets);
-            return new DecisionTreeNode(lowestEntropyAttribute, decisions);
+            return new DecisionTreeNode(highestInformationGainAttribute, decisions);
         }
     }
 

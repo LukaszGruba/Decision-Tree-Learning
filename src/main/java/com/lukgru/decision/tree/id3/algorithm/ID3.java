@@ -24,11 +24,27 @@ public class ID3 {
             return new DecisionTreeNode(homogeneousDecision);
         }
         else {
-            Attribute lowestEntropyAttribute = getLowestEntropyAttribute(trainingDataSet);
+            Attribute lowestEntropyAttribute = getHighestInformationGainAttribute(trainingDataSet);
             Map<Value, Collection<Instance>> dataSubsets = classificationRunner.split(trainingDataSet, lowestEntropyAttribute);
             Map<Value, DecisionTreeNode> decisions = createDecisions(dataSubsets);
             return new DecisionTreeNode(lowestEntropyAttribute, decisions);
         }
+    }
+
+    private Attribute getHighestInformationGainAttribute(Collection<Instance> data) {
+        Double initialEntropy = entropyEvaluator.evaluateEntropy(data);
+        return data.stream()
+                .flatMap(i -> i.getAttributes().stream())
+                .distinct()
+                .max((a1, a2) -> {
+                    Map<Value, Collection<Instance>> dataA1 = classificationRunner.split(data, a1);
+                    Double informationGainA1 = evaluateInformationGain(initialEntropy, dataA1.values());
+
+                    Map<Value, Collection<Instance>> dataA2 = classificationRunner.split(data, a2);
+                    Double informationGainA2 = evaluateInformationGain(initialEntropy, dataA2.values());
+
+                    return informationGainA1.compareTo(informationGainA2);
+                }).orElseThrow(() -> new RuntimeException("No maximum information gain."));
     }
 
     boolean isDataHomogeneous(Collection<Instance> trainingDataSet) {
@@ -39,7 +55,7 @@ public class ID3 {
         return numberOfValueTypes == 1;
     }
 
-    private Attribute getLowestEntropyAttribute(Collection<Instance> trainingDataSet) {
+    private Double evaluateInformationGain(Double initialEntropy, Collection<Collection<Instance>> values) {
         //TODO: implement
         return null;
     }

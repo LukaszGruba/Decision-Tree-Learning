@@ -1,5 +1,6 @@
 package com.lukgru.decision.tree.id3.data;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,10 @@ public class Instance {
 
     public Value getAttributeValue(Attribute attribute) {
         return attributeValues.get(attribute);
+    }
+
+    public Collection<Attribute> getAttributes() {
+        return attributeValues.keySet();
     }
 
     public Decision getDecision() {

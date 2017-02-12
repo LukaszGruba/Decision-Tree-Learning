@@ -1,7 +1,6 @@
 package com.lukgru.decision.tree.id3.algorithm;
 
-import com.lukgru.decision.tree.id3.data.AttributeClass;
-import com.lukgru.decision.tree.id3.data.Value;
+import com.lukgru.decision.tree.id3.data.Instance;
 
 import java.util.Collection;
 
@@ -10,14 +9,9 @@ import java.util.Collection;
  */
 public class EntropyEvaluator {
 
-    public double evaluateEntropy(Collection<Value> values, Collection<AttributeClass> classes) {
-        int size = values.size();
-        return classes.stream().mapToDouble(attributeClass -> {
-            long count = values.stream()
-                    .filter(attributeClass::meetsCriteria)
-                    .count();
-            double probability = count / size;
-            return probability != 0.0 ? -probability * Math.log(probability) / Math.log(2) : 0.0;
-        }).sum();
+    private ClassificationRunner splitter = new ClassificationRunner();
+
+    public Double evaluateEntropy(Collection<Instance> data) {
+        //TODO: implement
     }
 }

@@ -15,6 +15,7 @@ import java.util.Map;
 public class ID3 {
 
     private EntropyEvaluator entropyEvaluator = new EntropyEvaluator();
+    private InformationGainEvaluator informationGainEvaluator = new InformationGainEvaluator();
     private ClassificationRunner classificationRunner = new ClassificationRunner();
 
     public DecisionTreeNode learn(Collection<Instance> trainingDataSet) {
@@ -36,10 +37,10 @@ public class ID3 {
                 .distinct()
                 .max((a1, a2) -> {
                     Map<Value, Collection<Instance>> dataA1 = classificationRunner.split(data, a1);
-                    Double informationGainA1 = evaluateInformationGain(initialEntropy, dataA1.values());
+                    Double informationGainA1 = informationGainEvaluator.evaluateInformationGain(initialEntropy, dataA1.values());
 
                     Map<Value, Collection<Instance>> dataA2 = classificationRunner.split(data, a2);
-                    Double informationGainA2 = evaluateInformationGain(initialEntropy, dataA2.values());
+                    Double informationGainA2 = informationGainEvaluator.evaluateInformationGain(initialEntropy, dataA2.values());
 
                     return informationGainA1.compareTo(informationGainA2);
                 }).orElseThrow(() -> new RuntimeException("No maximum information gain."));
@@ -51,11 +52,6 @@ public class ID3 {
                 .distinct()
                 .count();
         return numberOfValueTypes == 1;
-    }
-
-    private Double evaluateInformationGain(Double initialEntropy, Collection<Collection<Instance>> values) {
-        //TODO: implement
-        return null;
     }
 
     private Map<Value, DecisionTreeNode> createDecisions(Map<Value, Collection<Instance>> dataSubsets) {

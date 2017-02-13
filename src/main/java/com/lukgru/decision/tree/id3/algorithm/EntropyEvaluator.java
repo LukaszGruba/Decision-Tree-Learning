@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 /**
- * Created by Łukasz on 2017-02-07.
+ * Created by Lukasz on 2017-02-07.
  */
 public class EntropyEvaluator {
 

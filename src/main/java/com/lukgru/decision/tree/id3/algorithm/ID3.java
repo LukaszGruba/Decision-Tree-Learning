@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Created by Łukasz on 2017-02-07.
+ * Created by Lukasz on 2017-02-07.
  */
 public class ID3 {
 
@@ -21,8 +21,7 @@ public class ID3 {
         if (isDataHomogeneous(trainingDataSet)) {
             Decision homogeneousDecision = trainingDataSet.stream().findFirst().get().getDecision();
             return new DecisionTreeNode(homogeneousDecision);
-        }
-        else {
+        } else {
             Attribute highestInformationGainAttribute = getHighestInformationGainAttribute(trainingDataSet);
             Map<Value, Collection<Instance>> dataSubsets = classificationRunner.split(trainingDataSet, highestInformationGainAttribute);
             Map<Value, DecisionTreeNode> decisions = createDecisions(dataSubsets);

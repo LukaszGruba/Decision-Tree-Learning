@@ -11,7 +11,7 @@ import com.lukgru.decision.tree.id3.tree.DecisionTreeNode;
 import java.util.Set;
 
 /**
- * Created by Łukasz on 2017-02-07.
+ * Created by Lukasz on 2017-02-07.
  */
 public class Main {
 

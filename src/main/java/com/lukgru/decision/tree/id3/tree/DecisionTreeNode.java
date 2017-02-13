@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Łukasz on 2017-02-07.
+ * Created by Lukasz on 2017-02-07.
  */
 public class DecisionTreeNode {
 

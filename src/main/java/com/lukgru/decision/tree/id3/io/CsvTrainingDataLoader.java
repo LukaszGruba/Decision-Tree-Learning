@@ -1,11 +1,7 @@
 package com.lukgru.decision.tree.id3.io;
 
-import com.lukgru.decision.tree.id3.data.Attribute;
-import com.lukgru.decision.tree.id3.data.AttributeClass;
 import com.lukgru.decision.tree.id3.data.Instance;
 
-import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -26,12 +22,6 @@ public class CsvTrainingDataLoader implements TrainingDataLoader {
 
     @Override
     public Set<Instance> getTrainingData() {
-        //TODO: implement
-        return null;
-    }
-
-    @Override
-    public Map<Attribute, Collection<AttributeClass>> getAttributeClasses() {
         //TODO: implement
         return null;
     }

@@ -1,7 +1,7 @@
 package com.lukgru.decision.tree.id3.data;
 
 /**
- * Created by Łukasz on 2017-02-07.
+ * Created by Lukasz on 2017-02-07.
  */
 public class Value {
 

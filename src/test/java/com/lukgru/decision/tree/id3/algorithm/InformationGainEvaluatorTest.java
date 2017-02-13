@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by Łukasz on 2017-02-13.
+ * Created by Lukasz on 2017-02-13.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class InformationGainEvaluatorTest {

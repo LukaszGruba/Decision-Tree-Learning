@@ -5,7 +5,7 @@ import com.lukgru.decision.tree.id3.data.Instance;
 import java.util.Collection;
 
 /**
- * Created by Łukasz on 2017-02-13.
+ * Created by Lukasz on 2017-02-13.
  */
 public class InformationGainEvaluator {
 

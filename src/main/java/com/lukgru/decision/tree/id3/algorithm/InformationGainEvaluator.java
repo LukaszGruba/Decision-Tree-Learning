@@ -9,9 +9,19 @@ import java.util.Collection;
  */
 public class InformationGainEvaluator {
 
-    public Double evaluateInformationGain(Double initialEntropy, Collection<Collection<Instance>> values) {
-        //TODO: implement
-        return null;
+    private EntropyEvaluator entropyEvaluator = new EntropyEvaluator();
+
+    public Double evaluateInformationGain(Double initialEntropy, Collection<Collection<Instance>> subsets) {
+        long allElementsCount = subsets.stream()
+                .mapToInt(Collection::size)
+                .sum();
+        double entropySum = subsets.stream()
+                .mapToDouble(subset -> {
+                    double proportion = (double) subset.size() / allElementsCount;
+                    return proportion * entropyEvaluator.evaluateEntropy(subset);
+                })
+                .sum();
+        return initialEntropy - entropySum;
     }
 
 }

@@ -54,6 +54,7 @@ public class ID3 {
         return numberOfValueTypes == 1;
     }
 
+    @SuppressWarnings("PMD")
     private Map<Value, DecisionTreeNode> createDecisions(Map<Value, Collection<Instance>> dataSubsets) {
         //TODO: implement
         return null;

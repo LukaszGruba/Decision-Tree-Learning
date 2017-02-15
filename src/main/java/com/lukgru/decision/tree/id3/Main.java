@@ -16,14 +16,18 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
-        TrainingDataLoader loader = new CsvTrainingDataLoader("training.csv");
-        loader.load();
-        Set<Instance> trainingDataSet = loader.getTrainingData();
+        try {
+            TrainingDataLoader loader = new CsvTrainingDataLoader("training.csv");
+            loader.load();
+            Set<Instance> trainingDataSet = loader.getTrainingData();
 
-        DecisionTreeNode root = new ID3().learn(trainingDataSet);
+            DecisionTreeNode root = new ID3().learn(trainingDataSet);
 
-        TreeWriter writer = new XmlTreeWriter();
-        writer.write(root, "tree.xml");
+            TreeWriter writer = new XmlTreeWriter();
+            writer.write(root, "tree.xml");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

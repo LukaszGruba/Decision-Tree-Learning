@@ -2,6 +2,7 @@ package com.lukgru.decision.tree.id3.io;
 
 import com.lukgru.decision.tree.id3.data.Instance;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Set;
  */
 public interface TrainingDataLoader {
 
-    void load();
+    void load() throws IOException;
 
     Set<Instance> getTrainingData();
 

@@ -7,6 +7,7 @@ import com.lukgru.decision.tree.id3.data.Value;
 import com.lukgru.decision.tree.id3.tree.DecisionTreeNode;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -54,10 +55,13 @@ public class ID3 {
         return numberOfValueTypes == 1;
     }
 
-    @SuppressWarnings("PMD")
     private Map<Value, DecisionTreeNode> createDecisions(Map<Value, Collection<Instance>> dataSubsets) {
-        //TODO: implement
-        return null;
+        Map<Value, DecisionTreeNode> decisions = new HashMap<>();
+        dataSubsets.forEach((value, subset) -> {
+            DecisionTreeNode node = learn(subset);
+            decisions.put(value, node);
+        });
+        return decisions;
     }
 
 }

@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class ID3WeatherForecastIT {
 
-    public static final Attribute DECISION_ATTRIBUTE = new Attribute("Play");
+    private static final Attribute DECISION_ATTRIBUTE = new Attribute("Play");
     private static final Decision YES_DECISION = new Decision(DECISION_ATTRIBUTE, new Value("Yes"));
     private static final Decision NO_DECISION = new Decision(DECISION_ATTRIBUTE, new Value("No"));
 

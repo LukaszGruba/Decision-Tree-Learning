@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class CsvTrainingDataLoaderIT {
     
     @Test
-    public void test() throws IOException {
+    public void shouldLoadData() throws IOException {
         //given
         String filePath = "src/test/resources/sample-training-data.csv";
 

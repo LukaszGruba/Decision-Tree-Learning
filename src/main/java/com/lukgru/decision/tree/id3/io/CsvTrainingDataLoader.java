@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toSet;
  */
 public class CsvTrainingDataLoader implements TrainingDataLoader {
 
-    private static final String CSV_DELIMITER = ",";
+    private static final String CSV_DELIMITER = ";";
 
     private final String stringPath;
     private boolean loaded = false;
@@ -37,7 +37,7 @@ public class CsvTrainingDataLoader implements TrainingDataLoader {
     public void load() throws IOException {
         List<String> lines = readLines();
         Attribute[] attributes = getAttributes(lines.get(0));
-        int valueAttributesAmount = attributes.length;
+        int valueAttributesAmount = attributes.length - 1;
         Attribute decisionAttribute = attributes[valueAttributesAmount];
         lines.remove(0);
 
@@ -62,9 +62,9 @@ public class CsvTrainingDataLoader implements TrainingDataLoader {
     }
 
     private Attribute[] getAttributes(String header) {
-        return (Attribute[]) Arrays.stream(header.split(CSV_DELIMITER))
+        return Arrays.stream(header.split(CSV_DELIMITER))
                 .map(Attribute::new)
-                .toArray();
+                .toArray(Attribute[]::new);
     }
 
     private List<String> readLines() throws IOException {

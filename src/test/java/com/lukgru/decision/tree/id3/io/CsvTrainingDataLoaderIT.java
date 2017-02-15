@@ -21,7 +21,7 @@ public class CsvTrainingDataLoaderIT {
     @Test
     public void shouldLoadData() throws IOException {
         //given
-        String filePath = "src/test/resources/sample-training-data.csv";
+        String filePath = "src/test/resources/sample-loader-data.csv";
 
         //when
         TrainingDataLoader loader = new CsvTrainingDataLoader(filePath);

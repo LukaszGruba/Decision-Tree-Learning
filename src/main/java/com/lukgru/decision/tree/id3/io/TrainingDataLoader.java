@@ -1,8 +1,10 @@
 package com.lukgru.decision.tree.id3.io;
 
+import com.lukgru.decision.tree.id3.data.Attribute;
 import com.lukgru.decision.tree.id3.data.Instance;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,6 +13,8 @@ import java.util.Set;
 public interface TrainingDataLoader {
 
     void load() throws IOException;
+
+    List<Attribute> getAttributesList();
 
     Set<Instance> getTrainingData();
 

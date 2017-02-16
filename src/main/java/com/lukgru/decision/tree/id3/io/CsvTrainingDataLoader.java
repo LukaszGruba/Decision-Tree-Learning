@@ -29,6 +29,7 @@ public class CsvTrainingDataLoader implements TrainingDataLoader {
     private boolean loaded = false;
 
     private Set<Instance> data;
+    private List<Attribute> attributesList;
 
     public CsvTrainingDataLoader(String stringPath) {
         this.stringPath = stringPath;
@@ -37,6 +38,7 @@ public class CsvTrainingDataLoader implements TrainingDataLoader {
     public void load() throws IOException {
         List<String> lines = readLines();
         Attribute[] attributes = getAttributes(lines.get(0));
+        this.attributesList = Arrays.asList(attributes);
         int valueAttributesAmount = attributes.length - 1;
         Attribute decisionAttribute = attributes[valueAttributesAmount];
         lines.remove(0);
@@ -54,6 +56,12 @@ public class CsvTrainingDataLoader implements TrainingDataLoader {
         loaded = true;
     }
 
+    @Override
+    public List<Attribute> getAttributesList() {
+        return this.attributesList;
+    }
+
+    @Override
     public Set<Instance> getTrainingData() {
         if (!loaded) {
             throw new IllegalStateException("Data has to be loaded before accessing.");

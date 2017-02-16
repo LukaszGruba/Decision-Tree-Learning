@@ -28,6 +28,14 @@ public class Main {
 
             TreeWriter writer = new XmlTreeWriter();
             writer.write(root, outputFilename);
+
+            //TODO: read data from input
+
+            //TODO: apply decision tree to data
+
+            //TODO: print result
+
+            //TODO: repeat
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class XmlTreeWriterIT {
 
-    private static final String INPUT_CSV_PATH = "src/test/resources/wealth-training-data.csv";
-    private static final String OUTPUT_XML_PATH = "src/test/resources/wealth-tree.xml";
+    private static final String INPUT_CSV_PATH = "src/test/resources/forecast-training-data.csv";
+    private static final String OUTPUT_XML_PATH = "src/test/resources/forecast-tree.xml";
 
     @After
     public void cleanUp() {
@@ -27,7 +27,7 @@ public class XmlTreeWriterIT {
     }
 
     @Test
-    public void test() throws IOException {
+    public void shouldCreateXML() throws IOException {
         //given
         TrainingDataLoader loader = new CsvTrainingDataLoader(INPUT_CSV_PATH);
         loader.load();
@@ -48,84 +48,51 @@ public class XmlTreeWriterIT {
 
     private String getExpectedContent() {
         return "<?xml version=\"1.0\"?>\n" +
-                "<split attribute=\"City\">\n" +
+                "<split attribute=\"Outlook\">\n" +
                 "\t<node>\n" +
-                "\t\t<value>New York</value>\n" +
+                "\t\t<value>Overcast</value>\n" +
                 "\t\t<decision>\n" +
-                "\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t<value>rich</value>\n" +
+                "\t\t\t<attribute>Play</attribute>\n" +
+                "\t\t\t<value>Yes</value>\n" +
                 "\t\t</decision>\n" +
                 "\t</node>\n" +
                 "\t<node>\n" +
-                "\t\t<value>Bialystok</value>\n" +
-                "\t\t<decision>\n" +
-                "\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t<value>poor</value>\n" +
-                "\t\t</decision>\n" +
-                "\t</node>\n" +
-                "\t<node>\n" +
-                "\t\t<value>Warszawa</value>\n" +
-                "\t\t<split attribute=\"Car\">\n" +
+                "\t\t<value>Rain</value>\n" +
+                "\t\t<split attribute=\"Wind\">\n" +
                 "\t\t\t<node>\n" +
-                "\t\t\t\t<value>Audi</value>\n" +
+                "\t\t\t\t<value>High</value>\n" +
                 "\t\t\t\t<decision>\n" +
-                "\t\t\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t\t\t<value>rich</value>\n" +
+                "\t\t\t\t\t<attribute>Play</attribute>\n" +
+                "\t\t\t\t\t<value>No</value>\n" +
                 "\t\t\t\t</decision>\n" +
                 "\t\t\t</node>\n" +
                 "\t\t\t<node>\n" +
-                "\t\t\t\t<value>Skoda</value>\n" +
-                "\t\t\t\t<split attribute=\"Sex\">\n" +
-                "\t\t\t\t\t<node>\n" +
-                "\t\t\t\t\t\t<value>f</value>\n" +
-                "\t\t\t\t\t\t<decision>\n" +
-                "\t\t\t\t\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t\t\t\t\t<value>rich</value>\n" +
-                "\t\t\t\t\t\t</decision>\n" +
-                "\t\t\t\t\t</node>\n" +
-                "\t\t\t\t</split>\n" +
-                "\t\t\t</node>\n" +
-                "\t\t</split>\n" +
-                "\t</node>\n" +
-                "\t<node>\n" +
-                "\t\t<value>Krakow</value>\n" +
-                "\t\t<split attribute=\"Sex\">\n" +
-                "\t\t\t<node>\n" +
-                "\t\t\t\t<value>m</value>\n" +
+                "\t\t\t\t<value>Low</value>\n" +
                 "\t\t\t\t<decision>\n" +
-                "\t\t\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t\t\t<value>poor</value>\n" +
-                "\t\t\t\t</decision>\n" +
-                "\t\t\t</node>\n" +
-                "\t\t\t<node>\n" +
-                "\t\t\t\t<value>f</value>\n" +
-                "\t\t\t\t<decision>\n" +
-                "\t\t\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t\t\t<value>rich</value>\n" +
+                "\t\t\t\t\t<attribute>Play</attribute>\n" +
+                "\t\t\t\t\t<value>Yes</value>\n" +
                 "\t\t\t\t</decision>\n" +
                 "\t\t\t</node>\n" +
                 "\t\t</split>\n" +
                 "\t</node>\n" +
                 "\t<node>\n" +
-                "\t\t<value>Berlin</value>\n" +
-                "\t\t<decision>\n" +
-                "\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t<value>rich</value>\n" +
-                "\t\t</decision>\n" +
-                "\t</node>\n" +
-                "\t<node>\n" +
-                "\t\t<value>Nowy Targ</value>\n" +
-                "\t\t<decision>\n" +
-                "\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t<value>poor</value>\n" +
-                "\t\t</decision>\n" +
-                "\t</node>\n" +
-                "\t<node>\n" +
-                "\t\t<value>Gdynia</value>\n" +
-                "\t\t<decision>\n" +
-                "\t\t\t<attribute>Status</attribute>\n" +
-                "\t\t\t<value>rich</value>\n" +
-                "\t\t</decision>\n" +
+                "\t\t<value>Sun</value>\n" +
+                "\t\t<split attribute=\"Humidity\">\n" +
+                "\t\t\t<node>\n" +
+                "\t\t\t\t<value>High</value>\n" +
+                "\t\t\t\t<decision>\n" +
+                "\t\t\t\t\t<attribute>Play</attribute>\n" +
+                "\t\t\t\t\t<value>No</value>\n" +
+                "\t\t\t\t</decision>\n" +
+                "\t\t\t</node>\n" +
+                "\t\t\t<node>\n" +
+                "\t\t\t\t<value>Normal</value>\n" +
+                "\t\t\t\t<decision>\n" +
+                "\t\t\t\t\t<attribute>Play</attribute>\n" +
+                "\t\t\t\t\t<value>Yes</value>\n" +
+                "\t\t\t\t</decision>\n" +
+                "\t\t\t</node>\n" +
+                "\t\t</split>\n" +
                 "\t</node>\n" +
                 "</split>";
     }

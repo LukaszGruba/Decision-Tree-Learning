@@ -9,6 +9,7 @@ import com.lukgru.decision.tree.id3.tree.DecisionTreeNode;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -32,11 +33,11 @@ public class ID3 {
         if (isDataHomogeneous(trainingDataSet)) {
             Decision homogeneousDecision = trainingDataSet.stream().findFirst().get().getDecision();
             return new DecisionTreeNode(homogeneousDecision);
-        } else if (attributesLeft.isEmpty()) {
+        } else if (attributesLeft.isEmpty() || !getHighestInformationGainAttribute(trainingDataSet, attributesLeft).isPresent()) {
             Decision mostCommonDecision = mostCommonDecision(trainingDataSet);
             return new DecisionTreeNode(mostCommonDecision);
         } else {
-            Attribute highestInformationGainAttribute = getHighestInformationGainAttribute(trainingDataSet, attributesLeft);
+            Attribute highestInformationGainAttribute = getHighestInformationGainAttribute(trainingDataSet, attributesLeft).get();
             Map<Value, Collection<Instance>> dataSubsets = classificationRunner.split(trainingDataSet, highestInformationGainAttribute);
 
             Collection<Attribute> attributesLeftForChildren = attributesLeftForChildren(attributesLeft, highestInformationGainAttribute);
@@ -61,7 +62,7 @@ public class ID3 {
         return attributes.stream().filter(a -> !toOmit.equals(a)).collect(toSet());
     }
 
-    private Attribute getHighestInformationGainAttribute(Collection<Instance> data, Collection<Attribute> attributesLeft) {
+    private Optional<Attribute> getHighestInformationGainAttribute(Collection<Instance> data, Collection<Attribute> attributesLeft) {
         Double initialEntropy = entropyEvaluator.evaluateEntropy(data);
         return attributesLeft.stream()
                 .max((a1, a2) -> {
@@ -72,7 +73,11 @@ public class ID3 {
                     Double informationGainA2 = informationGainEvaluator.evaluateInformationGain(initialEntropy, dataA2.values());
 
                     return informationGainA1.compareTo(informationGainA2);
-                }).orElseThrow(() -> new RuntimeException("No maximum information gain."));
+                }).filter(a -> {
+                    Map<Value, Collection<Instance>> split = classificationRunner.split(data, a);
+                    Double informationGain = informationGainEvaluator.evaluateInformationGain(initialEntropy, split.values());
+                    return informationGain > 0.0;
+                });
     }
 
     boolean isDataHomogeneous(Collection<Instance> trainingDataSet) {

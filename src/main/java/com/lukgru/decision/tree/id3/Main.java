@@ -34,26 +34,35 @@ public class Main {
             TrainingDataLoader loader = new CsvTrainingDataLoader(inputFilename);
             loader.load();
             Set<Instance> trainingDataSet = loader.getTrainingData();
+            System.out.println("Training data loaded.");
 
+            System.out.println("ID3 start");
             DecisionTreeNode root = new ID3().learn(trainingDataSet);
+            System.out.println("ID3 end");
 
             TreeWriter writer = new XmlTreeWriter();
             writer.write(root, outputFilename);
+            System.out.println("Decision tree saved as " + outputFilename);
 
             applyDecisionTreeForInputRows(root, loader.getAttributesList());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private static void applyDecisionTreeForInputRows(DecisionTreeNode root, List<Attribute> attributesList) {
         Scanner inputScanner = new Scanner(System.in);
-        String line = inputScanner.nextLine();
+        System.out.println("\nApply tree for:");
         while (inputScanner.hasNextLine()) {
+            String line = inputScanner.nextLine();
+            if ("".equals(line)) {
+                return;
+            }
             Instance inputInstance = parseInputLine(line, attributesList);
             Decision decision = applyOnTree(inputInstance, root);
             System.out.println("Result: " + decision.getValue().getValue());
-            line = inputScanner.nextLine();
+            System.out.println("\nApply tree for:");
         }
     }
 
@@ -68,6 +77,9 @@ public class Main {
     }
 
     private static Decision applyOnTree(Instance instance, DecisionTreeNode node) {
+        if (node == null) {
+            throw new RuntimeException("Could not apply tree to data.");
+        }
         if (node.getDecision() != null) {
             return node.getDecision();
         }

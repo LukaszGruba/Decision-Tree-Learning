@@ -38,7 +38,10 @@ public class CsvTrainingDataLoader implements TrainingDataLoader {
     public void load() throws IOException {
         List<String> lines = readLines();
         Attribute[] attributes = getAttributes(lines.get(0));
-        this.attributesList = Arrays.asList(attributes);
+        this.attributesList = new ArrayList<>();
+        for (int i = 0; i < attributes.length - 1; i++) {
+            attributesList.add(attributes[i]);
+        }
         int valueAttributesAmount = attributes.length - 1;
         Attribute decisionAttribute = attributes[valueAttributesAmount];
         lines.remove(0);
